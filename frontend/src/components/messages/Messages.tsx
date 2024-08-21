@@ -154,7 +154,7 @@ export default function Messages() {
               key={data.id}
               onClick={() => setSelectedUser(data)}
             >
-              <img src={data.userProfilePic} alt="" className="profile-photo" />
+              <img src={data?.userProfilePic} alt="" className="profile-photo" />
               <div className="profile-follow">
                 <span>{data.username}</span>
                 <span>{data.fullname}</span>
