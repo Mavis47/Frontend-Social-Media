@@ -1,7 +1,7 @@
 
 import type { Request, Response, NextFunction } from 'express';
 import  jwt, { type JwtPayload }  from 'jsonwebtoken';
-import prisma from "../db/db";
+import prisma from "../db/db.js";
 
 
 interface DecodedToken extends JwtPayload{

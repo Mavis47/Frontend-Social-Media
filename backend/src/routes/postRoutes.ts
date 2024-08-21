@@ -1,6 +1,6 @@
 import express from "express";
-import { AddComment, addPost, deleteComment, deletePost, fetchAllPost, fetchPost, likePost } from "../controllers/post.controller";
-import { protectRoutes } from "../middleware/authMiddleware";
+import { AddComment, addPost, deleteComment, deletePost, fetchAllPost, fetchPost, likePost } from "../controllers/post.controller.js";
+import { protectRoutes } from "../middleware/authMiddleware.js";
 import multer from "multer";
 
 const router  = express.Router();

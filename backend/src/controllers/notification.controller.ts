@@ -1,5 +1,5 @@
 import type { Request, Response } from "express";
-import prisma from "../db/db";
+import prisma from "../db/db.js";
 
 export const createNotification = async (req: Request, res: Response) => {
   const { userId, message } = req.body;

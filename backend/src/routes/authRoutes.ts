@@ -1,7 +1,7 @@
 import express from "express";
 import { deleteUserProfile, getAllUsers, getMe, login, logout, SearchAllUsers, signup } from "../controllers/auth.controller.js";
 import { protectRoutes } from "../middleware/authMiddleware.js";
-import { UpdateUserProfile } from './../controllers/auth.controller';
+import { UpdateUserProfile } from './../controllers/auth.controller.js';
 import multer from "multer";
 
 const router  = express.Router();

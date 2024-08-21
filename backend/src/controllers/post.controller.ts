@@ -1,6 +1,6 @@
 import type { Request, Response } from "express";
-import prisma from "../db/db";
-import { uploadImage, uploadVideo } from "../cloudinary/cloudinaryfunction";
+import prisma from "../db/db.js";
+import { uploadImage, uploadVideo } from "../cloudinary/cloudinaryfunction.js";
 import { MediaType } from "@prisma/client";
 import mime from "mime-types";
 

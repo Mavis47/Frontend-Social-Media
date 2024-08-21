@@ -1,5 +1,5 @@
 import type { Request, Response } from "express";
-import prisma from "../db/db";
+import prisma from "../db/db.js";
 import axios from "axios";
 
 export const sendMessage = async (req: Request, res: Response) => {

@@ -1,12 +1,11 @@
 import express from 'express';
-import dotenv from 'dotenv';
 import path from 'path';
-import authRoutes from './src/routes/authRoutes';
+import authRoutes from './src/routes/authRoutes.js';
 import cookieParser from 'cookie-parser';
-import postRoutes from './src/routes/postRoutes';
-import followRoutes from './src/routes/followRoutes';
-import notifyRoutes from "./src/routes/notificationRoutes";
-import messageRoutes from "./src/routes/messageRoutes";
+import postRoutes from './src/routes/postRoutes.js';
+import followRoutes from './src/routes/followRoutes.js';
+import notifyRoutes from "./src/routes/notificationRoutes.js";
+import messageRoutes from "./src/routes/messageRoutes.js";
 import { Server } from 'socket.io';
 import http from 'http';
 import cors from 'cors';
@@ -77,3 +76,5 @@ server.listen(PORT, () => {
 });
 
 app.set("socketio", io);
+
+export default app;

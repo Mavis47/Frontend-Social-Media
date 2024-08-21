@@ -41,6 +41,7 @@
     "undici-types": "^5.26.5"
   },
   "scripts": {
+    "postinstall": "bunx prisma generate",
     "dev:backend": "bun --watch index.ts",
     "dev:frontend": "cd ../frontend && vite",
     "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\""
