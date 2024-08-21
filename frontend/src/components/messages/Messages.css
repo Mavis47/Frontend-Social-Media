@@ -1,0 +1,174 @@
+.message-container{
+    display: flex;
+}
+.inbox{
+    width: 25vw;
+    height: 100vh;
+}
+
+.messageContainer{
+    width: 100vw;
+}
+
+.inbox-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 29px;
+    border: 1px solid gray;
+}
+
+.profile span{
+    font-size: 23px;
+}
+
+.user-note{
+    width: 20vw;
+    height: 85px;
+    overflow-x: scroll;
+}
+
+.chat{
+    height: 52vh;
+    overflow-y: scroll;
+}
+
+.chat-content{
+    width: 16vw;
+    height: 9vh;
+    margin-top: 16px;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.container{
+    height: 93px;
+    border: 1px solid gray;
+}
+
+.container p {
+    padding-top: 25px;
+    font-size: larger;
+}
+
+.container{
+    display: flex;
+}
+
+.profile-picture{
+    height: 49px;
+    width: 53px;
+    border-radius: 50%;
+    margin-top: 16px;
+}
+
+.messages{
+    height: 77vh;
+
+}
+
+input{
+    width: 80vw;
+    margin-top: 8px;
+}
+
+input::placeholder{
+    padding-left: 2px;
+}
+
+input[type="text"] {
+    padding-left: 48px;
+}
+
+.carousel-container {
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+    overflow: hidden;
+    margin: auto;
+    display: flex;
+    align-items: center;
+  }
+  
+  .carousel-slide {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+  }
+  
+  .carousel-item {
+    min-width: 41%;
+    box-sizing: border-box;
+  }
+  
+  .carousel-pic {
+    width: 67; /* Adjust size as needed */
+    height: 50px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin: 5px;
+  }
+  
+  .carousel-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    z-index: 1;
+  }
+  
+  .carousel-button.prev {
+    left: 0;
+  }
+  
+  .carousel-button.next {
+    right: 0;
+  }
+.messages{
+    display: flex;
+    justify-content: space-between;
+}
+
+.message-others{
+    width: 50%;
+    margin-left: 23px;
+    flex-direction: column;
+}
+
+.message-self{
+    width: 50%;
+    margin-right: 12px; 
+    display: flex;
+    justify-content: flex-end;
+    align-items: end;
+    flex-direction: column;
+}
+
+#message-text{
+    color: white
+}
+
+#paragraph-self{
+    width: 280px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9px;
+}
+
+#paragraph-others{
+    width: 280px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9px;
+}
+
+.deleteIcon{
+    cursor: pointer;
+}
