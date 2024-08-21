@@ -156,8 +156,8 @@ export default function Messages() {
             >
               <img src={data?.userProfilePic} alt="" className="profile-photo" />
               <div className="profile-follow">
-                <span>{data.username}</span>
-                <span>{data.fullname}</span>
+                <span>{data?.username}</span>
+                <span>{data?.fullname}</span>
               </div>
             </div>
           ))}
@@ -170,7 +170,7 @@ export default function Messages() {
             alt=""
             className="profile-picture ml-4"
           />
-          <p className="ml-5">{user.username}</p>
+          <p className="ml-5">{user?.username}</p>
         </div>
 
         {/* chat section */}
