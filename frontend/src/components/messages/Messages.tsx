@@ -166,7 +166,7 @@ export default function Messages() {
       <div className="messageContainer">
         <div className="container">
           <img
-            src={user.userProfilePic}
+            src={user?.userProfilePic}
             alt=""
             className="profile-picture ml-4"
           />
