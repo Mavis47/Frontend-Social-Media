@@ -28,7 +28,7 @@ export default function Signup() {
     formData.append("gender", gender);
 
     const signupData = await axios.post(
-      `http://localhost:5001/api/auth/signup`,
+      `http://social-media-kohl-psi.vercel.app/api/auth/signup`,
       formData,
       {
         headers: {
@@ -44,8 +44,14 @@ export default function Signup() {
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <form onSubmit={handleSignup} id="signup-form" className="w-full max-w-md bg-white p-8 rounded-lg shadow-lg">
-        <h1 className="text-2xl font-bold mb-6 text-center text-cyan-500">Signup</h1>
+      <form
+        onSubmit={handleSignup}
+        id="signup-form"
+        className="w-full max-w-md bg-white p-8 rounded-lg shadow-lg"
+      >
+        <h1 className="text-2xl font-bold mb-6 text-center text-cyan-500">
+          Signup
+        </h1>
         <div className="mb-4">
           <input
             type="email"
@@ -100,11 +106,16 @@ export default function Signup() {
         </div>
         <div className="mb-4 text-center">
           <h3 className="text-black">
-            <a href="/" className="text-blue-500 hover:underline">Already Have an Account? Click here...</a>
+            <a href="/" className="text-blue-500 hover:underline">
+              Already Have an Account? Click here...
+            </a>
           </h3>
         </div>
         <div className="text-center">
-          <button type="submit" className="w-full px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+          <button
+            type="submit"
+            className="w-full px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
             Sign up
           </button>
         </div>

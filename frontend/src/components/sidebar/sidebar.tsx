@@ -8,7 +8,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/auth.context";
 import { ChangeEvent, useEffect, useState } from "react";
-import LogoutIcon from '@mui/icons-material/Logout';
+import LogoutIcon from "@mui/icons-material/Logout";
 
 // type User = {
 //   id: number;
@@ -27,11 +27,14 @@ export default function Sidebar() {
 
   const handleLogout = async () => {
     // e.preventDefault();
-    await axios.post(`http://localhost:5001/api/auth/logout`, {
-      headers: {
-        Authorization: `Bearer ${auth.token}`,
-      },
-    });
+    await axios.post(
+      `http://social-media-kohl-psi.vercel.app/api/auth/logout`,
+      {
+        headers: {
+          Authorization: `Bearer ${auth.token}`,
+        },
+      }
+    );
     setAuth({ user: null, token: "" });
     localStorage.removeItem("auth");
     navigate("/");
@@ -40,7 +43,7 @@ export default function Sidebar() {
   const handleGetMe = async () => {
     if (!auth.token) return;
     const getLoginUserData = await axios.get(
-      `http://localhost:5001/api/auth/getMe`,
+      `http://social-media-kohl-psi.vercel.app/api/auth/getMe`,
       {
         headers: {
           Authorization: `Bearer ${auth.token}`,
@@ -67,7 +70,7 @@ export default function Sidebar() {
 
     try {
       const createPostData = await axios.post(
-        `http://localhost:5001/api/post/addPost`,
+        `http://social-media-kohl-psi.vercel.app/api/post/addPost`,
         formData,
         {
           headers: {
@@ -77,9 +80,9 @@ export default function Sidebar() {
         }
       );
       console.log("Post Created", createPostData);
-      if(createPostData){
-        navigate("/homepage")
-        alert("Post Created")
+      if (createPostData) {
+        navigate("/homepage");
+        alert("Post Created");
       }
     } catch (error) {
       console.log("Error Creating Post", error);
@@ -115,7 +118,7 @@ export default function Sidebar() {
             <span className="text-margin">Search</span>
           </li>
         </a>
-        
+
         <li>
           <MessageOutlinedIcon className="icon-margin" />
           <span className="text-margin">
@@ -151,12 +154,10 @@ export default function Sidebar() {
           </a>
         </li>
         <li onClick={handleLogout}>
-            <LogoutIcon className="icon-margin" />
-            <span className="text-margin">Logout</span>
-          </li>
+          <LogoutIcon className="icon-margin" />
+          <span className="text-margin">Logout</span>
+        </li>
       </ul>
-
-      
 
       {/* <!-- Main modal --> */}
       <div
@@ -279,8 +280,6 @@ export default function Sidebar() {
           </div>
         </div>
       </div>
-
-      
     </section>
   );
 }

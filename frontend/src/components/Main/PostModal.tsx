@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import CloseIcon from '@mui/icons-material/Close';
-import Photo from '../photos/mypic.jpg'; 
+import React, { useState } from "react";
+import CloseIcon from "@mui/icons-material/Close";
+import Photo from "../photos/mypic.jpg";
 import "./PostModal.css";
-import axios from 'axios';
-import { useAuth } from '../contexts/auth.context';
-import DeleteIcon from '@mui/icons-material/Delete';
+import axios from "axios";
+import { useAuth } from "../contexts/auth.context";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 type PostModalProps = {
   post: {
@@ -50,7 +50,8 @@ const PostModal: React.FC<PostModalProps> = ({ post, onClose }) => {
   const handleCommentSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     try {
-      const response = await axios.post(`http://localhost:5001/api/post/CommentPost/${post.id}`, 
+      const response = await axios.post(
+        `http://social-media-kohl-psi.vercel.app/api/post/CommentPost/${post.id}`,
         { comment_content: newComment },
         {
           headers: {
@@ -58,11 +59,14 @@ const PostModal: React.FC<PostModalProps> = ({ post, onClose }) => {
           },
         }
       );
-  
+
       if (response.status === 201) {
         // Extract the newly created comment from the response
-        const newCreatedComment = response.data.comments.find((comment: { comment_content: string; }) => comment.comment_content === newComment);
-  
+        const newCreatedComment = response.data.comments.find(
+          (comment: { comment_content: string }) =>
+            comment.comment_content === newComment
+        );
+
         // Update the comments state with the new comment
         setComments([...comments, newCreatedComment]);
         setNewComment(""); // Clear the input field
@@ -71,30 +75,34 @@ const PostModal: React.FC<PostModalProps> = ({ post, onClose }) => {
       console.log("Error in Comment ", error);
     }
   };
-  
 
   const handleCommentChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setNewComment(event.target.value);
   };
 
-  const handleDeleteComment = async(commentId: number) => {
-      console.log("Commentid :- ",commentId);
-      try {
-          await axios.delete(`http://localhost:5001/api/post/deletecomment/${commentId}`,{
-            headers: {
-              Authorization: `Bearer ${auth.token}`
-            }
-          })        
-          setComments(comments.filter(comment => comment.id !== commentId));
-      } catch (error) {
-        console.log("Error in Delete Comment :-",error)
-      }
-  }
-
+  const handleDeleteComment = async (commentId: number) => {
+    console.log("Commentid :- ", commentId);
+    try {
+      await axios.delete(
+        `http://social-media-kohl-psi.vercel.app/api/post/deletecomment/${commentId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${auth.token}`,
+          },
+        }
+      );
+      setComments(comments.filter((comment) => comment.id !== commentId));
+    } catch (error) {
+      console.log("Error in Delete Comment :-", error);
+    }
+  };
 
   return (
     <div className="modal-overlay-custom" onClick={onClose}>
-      <div className="modal-container-custom" onClick={(e) => e.stopPropagation()}>
+      <div
+        className="modal-container-custom"
+        onClick={(e) => e.stopPropagation()}
+      >
         <button className="modal-close-custom" onClick={onClose}>
           <CloseIcon />
         </button>
@@ -104,13 +112,15 @@ const PostModal: React.FC<PostModalProps> = ({ post, onClose }) => {
             alt="profileImage"
             className="modal-profile-img-custom"
           />
-          <span className="modal-username-custom">{post.user?.username || 'Unknown User'}</span>
+          <span className="modal-username-custom">
+            {post.user?.username || "Unknown User"}
+          </span>
         </div>
         <div className="modal-content-custom">
           <div className="modal-media-container-custom">
             {post.media?.map((mediaItem, index) => (
               <div key={index}>
-                {mediaItem.type === 'IMAGE' ? (
+                {mediaItem.type === "IMAGE" ? (
                   <img
                     src={mediaItem.url}
                     alt="Post Media"
@@ -126,18 +136,34 @@ const PostModal: React.FC<PostModalProps> = ({ post, onClose }) => {
             ))}
           </div>
           <div className="modal-post-content-custom">
-            <p className="modal-post-text-custom"><span>Caption :- {post.content}</span></p>
+            <p className="modal-post-text-custom">
+              <span>Caption :- {post.content}</span>
+            </p>
           </div>
           <div className="modal-comments-custom">
             {comments.map((comment) => (
-              <div key={comment.id} className="modal-comment-custom" style={{ display: "flex" }}>
-                <span className="text-black">{comment.user.username} :-</span> 
-                <span className="modal-comment-text-custom">{comment.comment_content}</span>
-                  <span><DeleteIcon className='text-black' onClick={() => handleDeleteComment(comment.id)}/></span> 
+              <div
+                key={comment.id}
+                className="modal-comment-custom"
+                style={{ display: "flex" }}
+              >
+                <span className="text-black">{comment.user.username} :-</span>
+                <span className="modal-comment-text-custom">
+                  {comment.comment_content}
+                </span>
+                <span>
+                  <DeleteIcon
+                    className="text-black"
+                    onClick={() => handleDeleteComment(comment.id)}
+                  />
+                </span>
               </div>
             ))}
           </div>
-          <form className="modal-comment-form-custom" onSubmit={handleCommentSubmit}>
+          <form
+            className="modal-comment-form-custom"
+            onSubmit={handleCommentSubmit}
+          >
             <input
               type="text"
               value={newComment}

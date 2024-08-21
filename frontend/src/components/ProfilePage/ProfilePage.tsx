@@ -12,12 +12,12 @@ type Media = {
   postId: number;
   url: string;
   type: "IMAGE" | "VIDEO"; // Adjust based on your actual data structure
-}
+};
 
 type Post = {
   id: number;
   media: Media[];
-}
+};
 
 type User = {
   username: string;
@@ -27,7 +27,7 @@ type User = {
   following: string; // Adjust based on your actual data structure
   userProfilePic: string;
   posts: Post[];
-}
+};
 
 export default function ProfilePage() {
   const { auth } = useAuth();
@@ -38,7 +38,7 @@ export default function ProfilePage() {
     if (!auth.token) return;
     try {
       const { data } = await axios.get(
-        `http://localhost:5001/api/auth/getMe`,
+        `http://social-media-kohl-psi.vercel.app/api/auth/getMe`,
         {
           headers: {
             Authorization: `Bearer ${auth.token}`,
@@ -51,19 +51,22 @@ export default function ProfilePage() {
     }
   };
 
-  const handleDeleteProfile = async() => {
+  const handleDeleteProfile = async () => {
     try {
-      await axios.delete(`http://localhost:5001/api/auth/deleteProfile`,{
-        headers: {
-          Authorization: `Bearer ${auth.token}`
+      await axios.delete(
+        `http://social-media-kohl-psi.vercel.app/api/auth/deleteProfile`,
+        {
+          headers: {
+            Authorization: `Bearer ${auth.token}`,
+          },
         }
-      }) 
-      alert('Profile Has Been Deleted')
-      navigate('/')
+      );
+      alert("Profile Has Been Deleted");
+      navigate("/");
     } catch (error) {
-      console.log("Error In Deleting Profile",error)
+      console.log("Error In Deleting Profile", error);
     }
-  }
+  };
 
   useEffect(() => {
     handleGetMe();
@@ -80,8 +83,12 @@ export default function ProfilePage() {
           <div className="profileInfo">
             <div className="heading">
               <span>{profileData?.username || "MY ProfileName"}</span>
-              <button className="profile-button"><a href="/edit-profile">Edit Profile</a></button>
-              <button className="profile-button" onClick={handleDeleteProfile}>Delete Profile</button>
+              <button className="profile-button">
+                <a href="/edit-profile">Edit Profile</a>
+              </button>
+              <button className="profile-button" onClick={handleDeleteProfile}>
+                Delete Profile
+              </button>
             </div>
             <div className="mid-heading">
               <span>{profileData?.posts.length || 0} posts</span>
@@ -93,8 +100,8 @@ export default function ProfilePage() {
         </div>
         <div className="All-posts">
           <div className="post-container">
-            {profileData?.posts.flatMap(post =>
-              post.media.map(media => (
+            {profileData?.posts.flatMap((post) =>
+              post.media.map((media) => (
                 <div className="single-posts" key={media.id}>
                   {media.type === "IMAGE" ? (
                     <img src={media.url || mypic} alt="Post" />

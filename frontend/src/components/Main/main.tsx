@@ -7,8 +7,8 @@ import ModeCommentOutlinedIcon from "@mui/icons-material/ModeCommentOutlined";
 import TurnedInNotOutlinedIcon from "@mui/icons-material/TurnedInNotOutlined";
 import axios from "axios";
 import { useAuth } from "../contexts/auth.context";
-import PostModal from "./PostModal"; 
-import DeleteIcon from '@mui/icons-material/Delete';
+import PostModal from "./PostModal";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 type Post = {
   id: number;
@@ -79,7 +79,7 @@ export default function Main() {
     try {
       console.log("Authorization Token:", auth.token);
       const response = await axios.get(
-        `http://localhost:5001/api/post/fetchAllPost`,
+        `http://social-media-kohl-psi.vercel.app/api/post/fetchAllPost`,
         {
           headers: {
             Authorization: `Bearer ${auth.token}`,
@@ -88,7 +88,7 @@ export default function Main() {
       );
       const postsData = response.data.postData;
       // Initialize likeCount for each post
-      const updatedPosts = postsData.map((post: { likes: string | any[]; }) => ({
+      const updatedPosts = postsData.map((post: { likes: string | any[] }) => ({
         ...post,
         likeCount: post.likes ? post.likes.length : 0,
       }));
@@ -101,7 +101,7 @@ export default function Main() {
   const handleLike = async (postId: number) => {
     try {
       const response = await axios.post(
-        `http://localhost:5001/api/post/likePost/${postId}`,
+        `http://social-media-kohl-psi.vercel.app/api/post/likePost/${postId}`,
         {},
         {
           headers: {
@@ -109,7 +109,7 @@ export default function Main() {
           },
         }
       );
-      console.log("response from handlelike",response)
+      console.log("response from handlelike", response);
       const updatedLikes = response.data.likes;
 
       // Update the specific post's like count
@@ -130,17 +130,20 @@ export default function Main() {
     }
   };
 
-  const handleDeletePost = async(postId: number) => {
-    console.log("post id :-",postId);
-    axios.delete(`http://localhost:5001/api/post/deletePost/${postId}`,{
-      headers: {
-        Authorization: `Bearer ${auth.token}`
+  const handleDeletePost = async (postId: number) => {
+    console.log("post id :-", postId);
+    axios.delete(
+      `http://social-media-kohl-psi.vercel.app/api/post/deletePost/${postId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${auth.token}`,
+        },
       }
-    })
+    );
     const updatedPosts = posts.filter((post) => post.id !== postId);
     setPosts(updatedPosts);
-    alert("Delete Post Successfully")
-  }
+    alert("Delete Post Successfully");
+  };
 
   useEffect(() => {
     showPosts();
@@ -148,7 +151,6 @@ export default function Main() {
 
   return (
     <main className="maintag">
-
       {/* Story Modal */}
       {isStoryModalOpen && (
         <div className="modal-overlay" onClick={closeStoryModal}>
@@ -174,7 +176,9 @@ export default function Main() {
       )}
 
       <div className="posts">
-        <h1 className="alert-tag">Refresh The Page To See Your Uploaded Content...</h1>
+        <h1 className="alert-tag">
+          Refresh The Page To See Your Uploaded Content...
+        </h1>
         {posts.map((post) => (
           <div key={post.id} className="post">
             <div className="profile-header">
@@ -187,7 +191,11 @@ export default function Main() {
                 <span>{post.user?.username || "Unknown User"}</span>
               </div>
               <div className="edit-profile">
-                <DeleteIcon margin-top="23px" style={{cursor: "pointer"}} onClick={() => handleDeletePost(post.id)}/>
+                <DeleteIcon
+                  margin-top="23px"
+                  style={{ cursor: "pointer" }}
+                  onClick={() => handleDeletePost(post.id)}
+                />
               </div>
             </div>
             <div className="post-content">

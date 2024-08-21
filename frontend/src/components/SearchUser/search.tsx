@@ -22,7 +22,7 @@ export default function Search() {
     console.log("token being sent in Search", auth.token);
 
     const searchData = await axios.get(
-      `http://localhost:5001/api/auth/searchAllUsers/${username}`,
+      `http://social-media-kohl-psi.vercel.app/api/auth/searchAllUsers/${username}`,
       {
         headers: {
           Authorization: `Bearer ${auth.token}`,
@@ -39,7 +39,7 @@ export default function Search() {
     console.log("token being sent", auth.token);
 
     const usersData = await axios.get(
-      `http://localhost:5001/api/auth/allUsers`,
+      `http://social-media-kohl-psi.vercel.app/api/auth/allUsers`,
       {
         headers: {
           Authorization: `Bearer ${auth.token}`,
@@ -72,41 +72,39 @@ export default function Search() {
         </div>
       </form>
       <div className="user-container">
-        {searchResults.length > 0 ? (
-          searchResults.map((user) => (
-            <div key={user.id} className="user">
-              <div className="search-box">
-                <div
-                  className="chat-content"
-                  style={{ width: "16vw !important", padding: "13px" }}
-                >
-                  <img src={user.ProfilePic} alt="" className="photo" />
-                  <div className="our-profile">
-                    <span>{user.username}</span>
-                    <span>{user.fullname}</span>
+        {searchResults.length > 0
+          ? searchResults.map((user) => (
+              <div key={user.id} className="user">
+                <div className="search-box">
+                  <div
+                    className="chat-content"
+                    style={{ width: "16vw !important", padding: "13px" }}
+                  >
+                    <img src={user.ProfilePic} alt="" className="photo" />
+                    <div className="our-profile">
+                      <span>{user.username}</span>
+                      <span>{user.fullname}</span>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          ))
-        ) : (
-          otherUsers.map((user) => (
-            <div key={user.id} className="user">
-              <div className="search-box">
-                <div
-                  className="chat-content"
-                  style={{ width: "16vw !important", padding: "13px" }}
-                >
-                  <img src={user.userProfilePic} alt="" className="photo" />
-                  <div className="our-profile">
-                    <span>{user.username}</span>
-                    <span>{user.fullname}</span>
+            ))
+          : otherUsers.map((user) => (
+              <div key={user.id} className="user">
+                <div className="search-box">
+                  <div
+                    className="chat-content"
+                    style={{ width: "16vw !important", padding: "13px" }}
+                  >
+                    <img src={user.userProfilePic} alt="" className="photo" />
+                    <div className="our-profile">
+                      <span>{user.username}</span>
+                      <span>{user.fullname}</span>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          ))
-        )}
+            ))}
       </div>
     </div>
   );

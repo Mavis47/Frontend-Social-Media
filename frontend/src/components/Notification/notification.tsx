@@ -5,12 +5,12 @@ import "./notification.css";
 import { io, Socket } from "socket.io-client";
 
 type FollowRequest = {
-    id: number;
-    followerId: number,
-    followingId: number,
-    status: string,
-    createdAt: string,
-}
+  id: number;
+  followerId: number;
+  followingId: number;
+  status: string;
+  createdAt: string;
+};
 
 type Notification = {
   id: number;
@@ -20,13 +20,13 @@ type Notification = {
 export default function Notification() {
   const { auth } = useAuth();
   const [notifications, setNotifications] = useState<Notification[]>([]);
-  const [receiveRequest,setreceiveRequest] = useState<FollowRequest []>([]);
+  const [receiveRequest, setreceiveRequest] = useState<FollowRequest[]>([]);
   const [socket, setSocket] = useState<Socket | null>(null);
 
   //getting all the Received Request
 
   useEffect(() => {
-    const newSocket = io("http://localhost:5001"); // Adjust URL if needed
+    const newSocket = io("http://social-media-kohl-psi.vercel.app"); // Adjust URL if needed
     setSocket(newSocket);
 
     // Cleanup on component unmount
@@ -35,55 +35,69 @@ export default function Notification() {
     };
   }, []);
 
-  const getRequest = async() => {
-      const receivedData = await axios.get(`http://localhost:5001/api/follow/getAllRequest`);
-      console.log("Getting Request...",receivedData.data);
-      setreceiveRequest(receivedData.data);
-  }
+  const getRequest = async () => {
+    const receivedData = await axios.get(
+      `http://social-media-kohl-psi.vercel.app/api/follow/getAllRequest`
+    );
+    console.log("Getting Request...", receivedData.data);
+    setreceiveRequest(receivedData.data);
+  };
 
   useEffect(() => {
     getRequest();
-  },[])
+  }, []);
 
   useEffect(() => {
     if (auth.user) {
       axios
-        .get(`http://localhost:5001/api/notify/${auth.user}`)
+        .get(`http://social-media-kohl-psi.vercel.app/api/notify/${auth.user}`)
         .then((response) => {
           console.log("Notifications Data:", response.data);
           setNotifications(response.data);
         })
-        .catch((error) => console.error("Error fetching notifications:", error));
+        .catch((error) =>
+          console.error("Error fetching notifications:", error)
+        );
     }
   }, [auth.user]);
 
   useEffect(() => {
     if (socket) {
       socket.on("notification", (notification: Notification) => {
-        console.log("Notification on client side :-",notification);
+        console.log("Notification on client side :-", notification);
         setNotifications((prev) => [...prev, notification]);
       });
     }
   }, [socket]);
 
-  const handleResponse = async (requestId: number, response: string,notificationId: number) => {
+  const handleResponse = async (
+    requestId: number,
+    response: string,
+    notificationId: number
+  ) => {
     console.log("Request Id:", requestId, "Response", response);
 
     try {
       // Handle the follow request response
-      await axios.post(`http://localhost:5001/api/follow/responseToRequest`, { requestId, response });
+      await axios.post(
+        `http://social-media-kohl-psi.vercel.app/api/follow/responseToRequest`,
+        { requestId, response }
+      );
 
       // After successfully handling the request, delete the notification
-      await axios.delete(`http://localhost:5001/api/notify/notification/${notificationId}`);
+      await axios.delete(
+        `http://social-media-kohl-psi.vercel.app/api/notify/notification/${notificationId}`
+      );
 
       // Update the state to remove the notification from the UI
       setNotifications((prev) =>
         prev.filter((notification) => notification.id !== requestId)
       );
-      
-
     } catch (error) {
-      console.error("Error handling follow request or deleting notification:", error);
+      console.error(
+        "Error handling follow request or deleting notification:",
+        error
+      );
     }
   };
 
@@ -98,20 +112,23 @@ export default function Notification() {
               {receiveRequest.map((request) => (
                 <div key={request.id}>
                   <button
-                  className="bg-blue-500"
-                  onClick={() => handleResponse(request.id, "ACCEPTED",notification.id)}
-                >
-                  Accept
-                </button>
-                <button
-                  className="bg-gray-600"
-                  onClick={() => handleResponse(request.id, "REJECTED",notification.id)}
-                >
-                  Reject
-                </button>
+                    className="bg-blue-500"
+                    onClick={() =>
+                      handleResponse(request.id, "ACCEPTED", notification.id)
+                    }
+                  >
+                    Accept
+                  </button>
+                  <button
+                    className="bg-gray-600"
+                    onClick={() =>
+                      handleResponse(request.id, "REJECTED", notification.id)
+                    }
+                  >
+                    Reject
+                  </button>
                 </div>
               ))}
-              
             </li>
           ))}
         </ul>
