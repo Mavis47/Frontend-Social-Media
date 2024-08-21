@@ -121,12 +121,15 @@ export default function Sidebar() {
           </li>
         </a>
 
+        <a href="/messages">
         <li>
           <MessageOutlinedIcon className="icon-margin" />
           <span className="text-margin">
-            <a href="/messages">Messages</a>
+            Messages
           </span>
         </li>
+        </a>
+
         <a href="/notification">
           <li>
             <FavoriteBorderOutlinedIcon className="icon-margin" />
