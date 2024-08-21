@@ -43,17 +43,11 @@ type Post = {
 };
 
 export default function Main() {
-  const [isStoryModalOpen, setIsStoryModalOpen] = useState(false);
-  const [selectedStory, setSelectedStory] = useState(null);
   const [isPostModalOpen, setIsPostModalOpen] = useState(false);
   const [selectedPost, setSelectedPost] = useState<Post | null>(null);
   const { auth } = useAuth();
   const [posts, setPosts] = useState<Post[]>([]);
 
-  const closeStoryModal = () => {
-    setIsStoryModalOpen(false);
-    setSelectedStory(null);
-  };
 
   const openPostModal = (post: Post) => {
     setSelectedPost(post);
@@ -70,7 +64,7 @@ export default function Main() {
     try {
       console.log("Authorization Token:", auth.token);
       const response = await axios.get(
-        `https://social-media-kohl-psi.vercel.app/api/post/fetchAllPost`,
+        `http://social-media-kohl-psi.vercel.app/api/post/fetchAllPost`,
         {
           headers: {
             Authorization: `Bearer ${auth.token}`,
@@ -92,7 +86,7 @@ export default function Main() {
   const handleLike = async (postId: number) => {
     try {
       const response = await axios.post(
-        `https://social-media-kohl-psi.vercel.app/api/post/likePost/${postId}`,
+        `http://social-media-kohl-psi.vercel.app/api/post/likePost/${postId}`,
         {},
         {
           headers: {
@@ -124,7 +118,7 @@ export default function Main() {
   const handleDeletePost = async (postId: number) => {
     console.log("post id :-", postId);
     axios.delete(
-      `https://social-media-kohl-psi.vercel.app/api/post/deletePost/${postId}`,
+      `http://social-media-kohl-psi.vercel.app/api/post/deletePost/${postId}`,
       {
         headers: {
           Authorization: `Bearer ${auth.token}`,
@@ -141,78 +135,81 @@ export default function Main() {
   }, [auth.token]);
 
   return (
-    <div className="posts">
-      <h1 className="alert-tag">
-        Refresh The Page To See Your Uploaded Content...
-      </h1>
-      {posts.map((post) => (
-        <div key={post.id} className="post">
-          <div className="profile-header">
-            <div className="profile-content">
-              <img
-                src={post.user?.userProfilePic || Photo}
-                alt="profileImage"
-                className="profile-img"
-              />
-              <span>{post.user?.username || "Unknown User"}</span>
-            </div>
-            <div className="edit-profile">
-              <DeleteIcon
-                margin-top="23px"
-                style={{ cursor: "pointer" }}
-                onClick={() => handleDeletePost(post.id)}
-              />
-            </div>
-          </div>
-          <div className="post-content">
-            {post.media?.map((mediaItem, index) => (
-              <div key={index}>
-                {mediaItem.type === "IMAGE" ? (
-                  <img
-                    src={mediaItem.url}
-                    alt="Post Media"
-                    className="full-size-media"
-                  />
-                ) : (
-                  <video controls className="full-size-video">
-                    <source src={mediaItem.url} type="video/mp4" />
-                    Your browser does not support the video tag.
-                  </video>
-                )}
+    
+      <div className="posts">
+        <h1 className="alert-tag">
+          Refresh The Page To See Your Uploaded Content...
+        </h1>
+        {posts.map((post) => (
+          <div key={post.id} className="post">
+            <div className="profile-header">
+              <div className="profile-content">
+                <img
+                  src={post.user?.userProfilePic || Photo}
+                  alt="profileImage"
+                  className="profile-img"
+                />
+                <span>{post.user?.username || "Unknown User"}</span>
               </div>
-            ))}
-          </div>
-          <div className="like-and-comment-save">
-            <div className="like-comment">
-              <FavoriteBorderIcon
-                fontSize="large"
-                onClick={() => handleLike(post.id)}
-              />
-              <ModeCommentOutlinedIcon
-                fontSize="large"
-                onClick={() => openPostModal(post)}
-              />
+              <div className="edit-profile">
+                <DeleteIcon
+                  margin-top="23px"
+                  style={{ cursor: "pointer" }}
+                  onClick={() => handleDeletePost(post.id)}
+                />
+              </div>
             </div>
-            <div className="save">
-              <TurnedInNotOutlinedIcon fontSize="large" />
+            <div className="post-content">
+              {post.media?.map((mediaItem, index) => (
+                <div key={index}>
+                  {mediaItem.type === "IMAGE" ? (
+                    <img
+                      src={mediaItem.url}
+                      alt="Post Media"
+                      className="full-size-media"
+                    />
+                  ) : (
+                    <video controls className="full-size-video">
+                      <source src={mediaItem.url} type="video/mp4" />
+                      Your browser does not support the video tag.
+                    </video>
+                  )}
+                </div>
+              ))}
             </div>
+            <div className="like-and-comment-save">
+              <div className="like-comment">
+                <FavoriteBorderIcon
+                  fontSize="large"
+                  onClick={() => handleLike(post.id)}
+                />
+                <ModeCommentOutlinedIcon
+                  fontSize="large"
+                  onClick={() => openPostModal(post)}
+                />
+              </div>
+              <div className="save">
+                <TurnedInNotOutlinedIcon fontSize="large" />
+              </div>
+            </div>
+            <p>
+              Liked by {post.likeCount || 0}{" "}
+              {post.likeCount === 1 ? "person" : "people"}
+            </p>
+            <br />
+            <p>
+              <span>{post.user?.username || "Unknown User"}</span>{" "}
+              {post.content.slice(0, 50)}...more
+            </p>
+            <br />
+            <p onClick={() => openPostModal(post)}>
+              View All {post.comments?.length || 0}{" "}
+              {post.comments?.length === 1 ? "comment" : "comments"}
+            </p>
           </div>
-          <p>
-            Liked by {post.likeCount || 0}{" "}
-            {post.likeCount === 1 ? "person" : "people"}
-          </p>
-          <br />
-          <p>
-            <span>{post.user?.username || "Unknown User"}</span>{" "}
-            {post.content.slice(0, 50)}...more
-          </p>
-          <br />
-          <p onClick={() => openPostModal(post)}>
-            View All {post.comments?.length || 0}{" "}
-            {post.comments?.length === 1 ? "comment" : "comments"}
-          </p>
-        </div>
-      ))}
-    </div>
+        ))}
+      </div>
+
+     
   );
 }
