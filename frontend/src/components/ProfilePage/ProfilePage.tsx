@@ -38,7 +38,7 @@ export default function ProfilePage() {
     if (!auth.token) return;
     try {
       const { data } = await axios.get(
-        `http://social-media-kohl-psi.vercel.app/api/auth/getMe`,
+        `https://social-media-kohl-psi.vercel.app/api/auth/getMe`,
         {
           headers: {
             Authorization: `Bearer ${auth.token}`,
@@ -54,7 +54,7 @@ export default function ProfilePage() {
   const handleDeleteProfile = async () => {
     try {
       await axios.delete(
-        `http://social-media-kohl-psi.vercel.app/api/auth/deleteProfile`,
+        `https://social-media-kohl-psi.vercel.app/api/auth/deleteProfile`,
         {
           headers: {
             Authorization: `Bearer ${auth.token}`,

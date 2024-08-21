@@ -23,7 +23,7 @@ export default function RightSidebar() {
     if (!auth.token) return;
 
     const Usersdata = await axios.get(
-      `http://social-media-kohl-psi.vercel.app/api/auth/allUsers`,
+      `https://social-media-kohl-psi.vercel.app/api/auth/allUsers`,
       {
         headers: {
           Authorization: `Bearer ${auth.token}`,
@@ -40,7 +40,7 @@ export default function RightSidebar() {
     console.log("User Id ", followerId, "Following Id :-", followingId);
     if (!auth.token) return;
     const followData = await axios.post(
-      `http://social-media-kohl-psi.vercel.app/api/follow/userToFollow`,
+      `https://social-media-kohl-psi.vercel.app/api/follow/userToFollow`,
       { followerId, followingId },
       {
         headers: {

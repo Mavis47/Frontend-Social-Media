@@ -1,6 +1,5 @@
 //@ts-nocheck
 
-
 import "./sidebar.css";
 import HomeIcon from "@mui/icons-material/Home";
 import SearchIcon from "@mui/icons-material/Search";
@@ -31,7 +30,7 @@ export default function Sidebar() {
   const handleLogout = async () => {
     // e.preventDefault();
     await axios.post(
-      `http://social-media-kohl-psi.vercel.app/api/auth/logout`,
+      `https://social-media-kohl-psi.vercel.app/api/auth/logout`,
       {
         headers: {
           Authorization: `Bearer ${auth.token}`,
@@ -46,7 +45,7 @@ export default function Sidebar() {
   const handleGetMe = async () => {
     if (!auth.token) return;
     const getLoginUserData = await axios.get(
-      `http://social-media-kohl-psi.vercel.app/api/auth/getMe`,
+      `https://social-media-kohl-psi.vercel.app/api/auth/getMe`,
       {
         headers: {
           Authorization: `Bearer ${auth.token}`,
@@ -73,7 +72,7 @@ export default function Sidebar() {
 
     try {
       const createPostData = await axios.post(
-        `http://social-media-kohl-psi.vercel.app/api/post/addPost`,
+        `https://social-media-kohl-psi.vercel.app/api/post/addPost`,
         formData,
         {
           headers: {

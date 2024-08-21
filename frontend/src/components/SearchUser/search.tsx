@@ -24,7 +24,7 @@ export default function Search() {
     console.log("token being sent in Search", auth.token);
 
     const searchData = await axios.get(
-      `http://social-media-kohl-psi.vercel.app/api/auth/searchAllUsers/${username}`,
+      `https://social-media-kohl-psi.vercel.app/api/auth/searchAllUsers/${username}`,
       {
         headers: {
           Authorization: `Bearer ${auth.token}`,
@@ -41,7 +41,7 @@ export default function Search() {
     console.log("token being sent", auth.token);
 
     const usersData = await axios.get(
-      `http://social-media-kohl-psi.vercel.app/api/auth/allUsers`,
+      `https://social-media-kohl-psi.vercel.app/api/auth/allUsers`,
       {
         headers: {
           Authorization: `Bearer ${auth.token}`,

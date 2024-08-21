@@ -28,7 +28,7 @@ export default function Signup() {
     formData.append("gender", gender);
 
     const signupData = await axios.post(
-      `http://social-media-kohl-psi.vercel.app/api/auth/signup`,
+      `https://social-media-kohl-psi.vercel.app/api/auth/signup`,
       formData,
       {
         headers: {

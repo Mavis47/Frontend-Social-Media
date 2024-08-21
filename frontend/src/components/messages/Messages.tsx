@@ -35,7 +35,7 @@ export default function Messages() {
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
 
   useEffect(() => {
-    const newSocket = io("http://social-media-kohl-psi.vercel.app"); // Connect to the server
+    const newSocket = io("https://social-media-kohl-psi.vercel.app"); // Connect to the server
     setSocket(newSocket);
 
     // Cleanup the socket connection when the component unmounts
@@ -47,7 +47,7 @@ export default function Messages() {
   const getloggedinUser = async () => {
     if (!auth.token) return;
     const loggedInUser = await axios.get(
-      `http://social-media-kohl-psi.vercel.app/api/auth/getMe`,
+      `https://social-media-kohl-psi.vercel.app/api/auth/getMe`,
       {
         headers: {
           Authorization: `Bearer ${auth.token}`,
@@ -62,7 +62,7 @@ export default function Messages() {
     if (!auth.token) return;
 
     const Usersdata = await axios.get(
-      `http://social-media-kohl-psi.vercel.app/api/auth/allUsers`,
+      `https://social-media-kohl-psi.vercel.app/api/auth/allUsers`,
       {
         headers: {
           Authorization: `Bearer ${auth.token}`,
@@ -77,7 +77,7 @@ export default function Messages() {
 
   const fetchMessages = async (receiverId: number) => {
     const messagesData = await axios.get(
-      `http://social-media-kohl-psi.vercel.app/api/message/getMessage/${user.id}/${receiverId}`
+      `https://social-media-kohl-psi.vercel.app/api/message/getMessage/${user.id}/${receiverId}`
     );
     setMessages(messagesData.data.data);
   };
@@ -86,7 +86,7 @@ export default function Messages() {
     if (!auth.token || !user || !selectedUser || !newMessage) return;
 
     const response = await axios.post(
-      `http://social-media-kohl-psi.vercel.app/api/message/sendMessage`,
+      `https://social-media-kohl-psi.vercel.app/api/message/sendMessage`,
       {
         senderId: auth.user,
         receiverId: selectedUser.id,
@@ -102,7 +102,7 @@ export default function Messages() {
 
   const handleDelete = async (messageId: number) => {
     const deletedata = await axios.delete(
-      `http://social-media-kohl-psi.vercel.app/api/message/deleteMessage/${messageId}`
+      `https://social-media-kohl-psi.vercel.app/api/message/deleteMessage/${messageId}`
     );
     setMessages((prevMessages) =>
       prevMessages.filter((message) => message.id !== messageId)

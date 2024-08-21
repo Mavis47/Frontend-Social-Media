@@ -70,7 +70,7 @@ export default function Main() {
     try {
       console.log("Authorization Token:", auth.token);
       const response = await axios.get(
-        `http://social-media-kohl-psi.vercel.app/api/post/fetchAllPost`,
+        `https://social-media-kohl-psi.vercel.app/api/post/fetchAllPost`,
         {
           headers: {
             Authorization: `Bearer ${auth.token}`,
@@ -92,7 +92,7 @@ export default function Main() {
   const handleLike = async (postId: number) => {
     try {
       const response = await axios.post(
-        `http://social-media-kohl-psi.vercel.app/api/post/likePost/${postId}`,
+        `https://social-media-kohl-psi.vercel.app/api/post/likePost/${postId}`,
         {},
         {
           headers: {
@@ -124,7 +124,7 @@ export default function Main() {
   const handleDeletePost = async (postId: number) => {
     console.log("post id :-", postId);
     axios.delete(
-      `http://social-media-kohl-psi.vercel.app/api/post/deletePost/${postId}`,
+      `https://social-media-kohl-psi.vercel.app/api/post/deletePost/${postId}`,
       {
         headers: {
           Authorization: `Bearer ${auth.token}`,
@@ -141,81 +141,78 @@ export default function Main() {
   }, [auth.token]);
 
   return (
-    
-      <div className="posts">
-        <h1 className="alert-tag">
-          Refresh The Page To See Your Uploaded Content...
-        </h1>
-        {posts.map((post) => (
-          <div key={post.id} className="post">
-            <div className="profile-header">
-              <div className="profile-content">
-                <img
-                  src={post.user?.userProfilePic || Photo}
-                  alt="profileImage"
-                  className="profile-img"
-                />
-                <span>{post.user?.username || "Unknown User"}</span>
-              </div>
-              <div className="edit-profile">
-                <DeleteIcon
-                  margin-top="23px"
-                  style={{ cursor: "pointer" }}
-                  onClick={() => handleDeletePost(post.id)}
-                />
-              </div>
+    <div className="posts">
+      <h1 className="alert-tag">
+        Refresh The Page To See Your Uploaded Content...
+      </h1>
+      {posts.map((post) => (
+        <div key={post.id} className="post">
+          <div className="profile-header">
+            <div className="profile-content">
+              <img
+                src={post.user?.userProfilePic || Photo}
+                alt="profileImage"
+                className="profile-img"
+              />
+              <span>{post.user?.username || "Unknown User"}</span>
             </div>
-            <div className="post-content">
-              {post.media?.map((mediaItem, index) => (
-                <div key={index}>
-                  {mediaItem.type === "IMAGE" ? (
-                    <img
-                      src={mediaItem.url}
-                      alt="Post Media"
-                      className="full-size-media"
-                    />
-                  ) : (
-                    <video controls className="full-size-video">
-                      <source src={mediaItem.url} type="video/mp4" />
-                      Your browser does not support the video tag.
-                    </video>
-                  )}
-                </div>
-              ))}
+            <div className="edit-profile">
+              <DeleteIcon
+                margin-top="23px"
+                style={{ cursor: "pointer" }}
+                onClick={() => handleDeletePost(post.id)}
+              />
             </div>
-            <div className="like-and-comment-save">
-              <div className="like-comment">
-                <FavoriteBorderIcon
-                  fontSize="large"
-                  onClick={() => handleLike(post.id)}
-                />
-                <ModeCommentOutlinedIcon
-                  fontSize="large"
-                  onClick={() => openPostModal(post)}
-                />
-              </div>
-              <div className="save">
-                <TurnedInNotOutlinedIcon fontSize="large" />
-              </div>
-            </div>
-            <p>
-              Liked by {post.likeCount || 0}{" "}
-              {post.likeCount === 1 ? "person" : "people"}
-            </p>
-            <br />
-            <p>
-              <span>{post.user?.username || "Unknown User"}</span>{" "}
-              {post.content.slice(0, 50)}...more
-            </p>
-            <br />
-            <p onClick={() => openPostModal(post)}>
-              View All {post.comments?.length || 0}{" "}
-              {post.comments?.length === 1 ? "comment" : "comments"}
-            </p>
           </div>
-        ))}
-      </div>
-
-     
+          <div className="post-content">
+            {post.media?.map((mediaItem, index) => (
+              <div key={index}>
+                {mediaItem.type === "IMAGE" ? (
+                  <img
+                    src={mediaItem.url}
+                    alt="Post Media"
+                    className="full-size-media"
+                  />
+                ) : (
+                  <video controls className="full-size-video">
+                    <source src={mediaItem.url} type="video/mp4" />
+                    Your browser does not support the video tag.
+                  </video>
+                )}
+              </div>
+            ))}
+          </div>
+          <div className="like-and-comment-save">
+            <div className="like-comment">
+              <FavoriteBorderIcon
+                fontSize="large"
+                onClick={() => handleLike(post.id)}
+              />
+              <ModeCommentOutlinedIcon
+                fontSize="large"
+                onClick={() => openPostModal(post)}
+              />
+            </div>
+            <div className="save">
+              <TurnedInNotOutlinedIcon fontSize="large" />
+            </div>
+          </div>
+          <p>
+            Liked by {post.likeCount || 0}{" "}
+            {post.likeCount === 1 ? "person" : "people"}
+          </p>
+          <br />
+          <p>
+            <span>{post.user?.username || "Unknown User"}</span>{" "}
+            {post.content.slice(0, 50)}...more
+          </p>
+          <br />
+          <p onClick={() => openPostModal(post)}>
+            View All {post.comments?.length || 0}{" "}
+            {post.comments?.length === 1 ? "comment" : "comments"}
+          </p>
+        </div>
+      ))}
+    </div>
   );
 }

@@ -13,7 +13,7 @@ export default function Login() {
     e.preventDefault();
     try {
       const response = await axios.post(
-        `http://social-media-kohl-psi.vercel.app/api/auth/login`,
+        `https://social-media-kohl-psi.vercel.app/api/auth/login`,
         { username, password }
       );
       console.log("loginData", response.data);

@@ -16,7 +16,7 @@ export default function EditProfile() {
       if (!auth.token) return;
       try {
         const response = await axios.get(
-          "http://social-media-kohl-psi.vercel.app/api/auth/getMe",
+          "https://social-media-kohl-psi.vercel.app/api/auth/getMe",
           {
             headers: {
               Authorization: `Bearer ${auth.token}`,
@@ -59,7 +59,7 @@ export default function EditProfile() {
 
     try {
       const response = await axios.put(
-        "http://social-media-kohl-psi.vercel.app/api/auth/updateProfile",
+        "https://social-media-kohl-psi.vercel.app/api/auth/updateProfile",
         data,
         {
           headers: {

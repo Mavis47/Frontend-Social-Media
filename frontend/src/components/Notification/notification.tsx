@@ -26,7 +26,7 @@ export default function Notification() {
   //getting all the Received Request
 
   useEffect(() => {
-    const newSocket = io("http://social-media-kohl-psi.vercel.app"); // Adjust URL if needed
+    const newSocket = io("https://social-media-kohl-psi.vercel.app"); // Adjust URL if needed
     setSocket(newSocket);
 
     // Cleanup on component unmount
@@ -37,7 +37,7 @@ export default function Notification() {
 
   const getRequest = async () => {
     const receivedData = await axios.get(
-      `http://social-media-kohl-psi.vercel.app/api/follow/getAllRequest`
+      `https://social-media-kohl-psi.vercel.app/api/follow/getAllRequest`
     );
     console.log("Getting Request...", receivedData.data);
     setreceiveRequest(receivedData.data);
@@ -50,7 +50,7 @@ export default function Notification() {
   useEffect(() => {
     if (auth.user) {
       axios
-        .get(`http://social-media-kohl-psi.vercel.app/api/notify/${auth.user}`)
+        .get(`https://social-media-kohl-psi.vercel.app/api/notify/${auth.user}`)
         .then((response) => {
           console.log("Notifications Data:", response.data);
           setNotifications(response.data);
@@ -80,13 +80,13 @@ export default function Notification() {
     try {
       // Handle the follow request response
       await axios.post(
-        `http://social-media-kohl-psi.vercel.app/api/follow/responseToRequest`,
+        `https://social-media-kohl-psi.vercel.app/api/follow/responseToRequest`,
         { requestId, response }
       );
 
       // After successfully handling the request, delete the notification
       await axios.delete(
-        `http://social-media-kohl-psi.vercel.app/api/notify/notification/${notificationId}`
+        `https://social-media-kohl-psi.vercel.app/api/notify/notification/${notificationId}`
       );
 
       // Update the state to remove the notification from the UI

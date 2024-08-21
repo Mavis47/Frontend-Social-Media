@@ -51,7 +51,7 @@ const PostModal: React.FC<PostModalProps> = ({ post, onClose }) => {
     event.preventDefault();
     try {
       const response = await axios.post(
-        `http://social-media-kohl-psi.vercel.app/api/post/CommentPost/${post.id}`,
+        `https://social-media-kohl-psi.vercel.app/api/post/CommentPost/${post.id}`,
         { comment_content: newComment },
         {
           headers: {
@@ -84,7 +84,7 @@ const PostModal: React.FC<PostModalProps> = ({ post, onClose }) => {
     console.log("Commentid :- ", commentId);
     try {
       await axios.delete(
-        `http://social-media-kohl-psi.vercel.app/api/post/deletecomment/${commentId}`,
+        `https://social-media-kohl-psi.vercel.app/api/post/deletecomment/${commentId}`,
         {
           headers: {
             Authorization: `Bearer ${auth.token}`,
