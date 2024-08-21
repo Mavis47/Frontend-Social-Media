@@ -208,8 +208,14 @@ export default function Main() {
             </p>
           </div>
         ))}
-      </div>
 
-     
+        {isPostModalOpen && (
+        <PostModal 
+          post={selectedPost} 
+          isOpen={isPostModalOpen} 
+          onClose={closePostModal} 
+        />
+      )}
+      </div>
   );
 }
