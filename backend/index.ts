@@ -33,7 +33,7 @@ app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 
 // Static files
-app.use('/public', express.static(path.join(__dirname, 'public')));
+app.use('/public', express.static(path.join(process.cwd(),'public')));
 
 // Route setup
 app.use("/api/auth", authRoutes);
