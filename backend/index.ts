@@ -17,8 +17,8 @@ const PORT = process.env.PORT || 5001;
 // Initialize Socket.IO with CORS configuration
 const io = new Server(server, {
     cors: {
-        origin: "http://localhost:5173",  // Frontend URL
-        methods: ['GET','POST'],
+        origin: process.env.ALLOWED_ORIGIN,  // Frontend URL
+        methods: ['GET','POST','PUT','DELETE','PATCH'],
         credentials: true,
     },
 });
@@ -45,6 +45,11 @@ app.use("/api/message",messageRoutes)
 app.get("/", (req, res) => {
     res.send("Hello Chat");
 });
+
+app.get("/hey", (req, res) => {
+    res.send("ola hu uber");
+});
+
 
 // Socket.IO connection handling
 io.on("connection", (socket) => {
