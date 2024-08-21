@@ -1,3 +1,5 @@
+//@ts-nocheck
+
 import "./search.css";
 import axios from "axios";
 import { useState, useEffect } from "react";

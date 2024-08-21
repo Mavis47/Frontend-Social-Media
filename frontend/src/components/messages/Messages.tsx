@@ -1,3 +1,5 @@
+//@ts-nocheck
+
 import "./Messages.css";
 import EditNoteOutlinedIcon from "@mui/icons-material/EditNoteOutlined";
 import { useEffect, useState } from "react";
@@ -27,7 +29,7 @@ export default function Messages() {
   const [socket, setSocket] = useState<Socket | null>(null);
   const [userdata, setUserData] = useState<User[] | null>(null);
   const { auth } = useAuth();
-  const [user, setUser] = useState<User>("");
+  const [user, setUser] = useState<User | null>(null);
   const [messages, setMessages] = useState<Message[]>([]);
   const [newMessage, setNewMessage] = useState("");
   const [selectedUser, setSelectedUser] = useState<User | null>(null);

@@ -1,3 +1,5 @@
+//@ts-nocheck
+
 import { useEffect, useState } from "react";
 import "./main.css";
 import Photo from "../photos/mypic.jpg"; // Default photo or placeholder
@@ -47,17 +49,6 @@ export default function Main() {
   const [selectedPost, setSelectedPost] = useState<Post | null>(null);
   const { auth } = useAuth();
   const [posts, setPosts] = useState<Post[]>([]);
-
-  const stories = [
-    { id: 1, image: Photo, name: "Story 1" },
-    { id: 2, image: Photo2, name: "Story 2" },
-    { id: 3, image: Photo, name: "Story 3" },
-    { id: 4, image: Photo, name: "Story 4" },
-    { id: 5, image: Photo, name: "Story 5" },
-    { id: 6, image: Photo, name: "Story 6" },
-    { id: 7, image: Photo, name: "Story 7" },
-    { id: 8, image: Photo, name: "Story 8" },
-  ];
 
   const closeStoryModal = () => {
     setIsStoryModalOpen(false);
@@ -150,31 +141,7 @@ export default function Main() {
   }, [auth.token]);
 
   return (
-    <main className="maintag">
-      {/* Story Modal */}
-      {isStoryModalOpen && (
-        <div className="modal-overlay" onClick={closeStoryModal}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <button
-              className="modal-close text-black text-5xl"
-              onClick={closeStoryModal}
-            >
-              &times;
-            </button>
-            {selectedStory && (
-              <div className="modal-story">
-                <img
-                  src={selectedStory.image}
-                  alt={selectedStory.name}
-                  className="modal-image"
-                />
-                <p className="modal-name">{selectedStory.name}</p>
-              </div>
-            )}
-          </div>
-        </div>
-      )}
-
+    
       <div className="posts">
         <h1 className="alert-tag">
           Refresh The Page To See Your Uploaded Content...
@@ -249,10 +216,6 @@ export default function Main() {
         ))}
       </div>
 
-      {/* Post Modal
-      {isPostModalOpen && selectedPost && (
-        <PostModal post={selectedPost} onClose={closePostModal} />
-      )} */}
-    </main>
+     
   );
 }

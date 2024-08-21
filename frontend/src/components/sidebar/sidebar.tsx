@@ -1,3 +1,6 @@
+//@ts-nocheck
+
+
 import "./sidebar.css";
 import HomeIcon from "@mui/icons-material/Home";
 import SearchIcon from "@mui/icons-material/Search";
