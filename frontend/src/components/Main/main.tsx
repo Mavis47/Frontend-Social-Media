@@ -64,7 +64,7 @@ export default function Main() {
     try {
       console.log("Authorization Token:", auth.token);
       const response = await axios.get(
-        `http://social-media-kohl-psi.vercel.app/api/post/fetchAllPost`,
+        `https://social-media-kohl-psi.vercel.app/api/post/fetchAllPost`,
         {
           headers: {
             Authorization: `Bearer ${auth.token}`,
