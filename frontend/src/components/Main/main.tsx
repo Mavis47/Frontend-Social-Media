@@ -186,6 +186,7 @@ export default function Main() {
                 <ModeCommentOutlinedIcon
                   fontSize="large"
                   onClick={() => openPostModal(post)}
+                  onTouchStart={() => openPostModal(post)}
                 />
               </div>
               <div className="save">
