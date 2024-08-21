@@ -1,0 +1,148 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id              Int      @id @default(autoincrement())
+  email           String   @unique
+  username        String   @unique
+  fullname        String   
+  password        String
+  userProfilePic  String?
+  gender          String
+  posts           Post[]
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  Like Like[]
+  comments        Comment[]
+
+  followers       Follow[]  @relation("Followers")
+  following       Follow[]  @relation("Following")
+
+  followRequestsSent     FollowRequest[]  @relation("FollowRequestsSent")
+  followRequestsReceived FollowRequest[]  @relation("FollowRequestsReceived")
+
+  isPrivate       Boolean          @default(false)
+
+  Notification Notification[]
+
+  sentMessages Message[] @relation("SentMessages")
+
+  receivedMessages  Message[] @relation("ReceivedMessages")
+}
+
+model Follow {
+  id              Int       @id @default(autoincrement())
+  followerId      Int
+  followingId     Int
+  follower        User      @relation("Following", fields: [followerId], references: [id]) //id of the user following someone
+  following       User      @relation("Followers", fields: [followingId], references: [id]) //id of the user followed someone
+  createdAt       DateTime  @default(now())
+
+  @@unique([followerId, followingId]) // Ensure that a user can follow another user only once
+}
+
+model FollowRequest {
+  id              Int       @id @default(autoincrement())
+  followerId      Int
+  followingId     Int
+  status          FollowRequestStatus @default(PENDING)
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  follower        User      @relation("FollowRequestsSent", fields: [followerId], references: [id]) //All follow requests this user has sent.
+  following       User      @relation("FollowRequestsReceived", fields: [followingId], references: [id]) //All follow requests this user has received.
+
+  @@unique([followerId, followingId]) // Ensure that a user can request to follow another user only once
+}
+
+model Post {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id])
+  media     Media[]
+  content   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  likes           Like[]
+  comments        Comment[]
+}
+
+model Like {
+  id              Int       @id @default(autoincrement())
+  userId          Int
+  postId          Int
+  user            User     @relation(fields: [userId], references: [id])
+  post            Post     @relation(fields: [postId], references: [id])
+  createdAt       DateTime @default(now())
+  
+  @@unique([userId, postId]) // Ensure that a user can like a post only once
+}
+
+model Comment {
+  id              Int       @id @default(autoincrement())
+  userId          Int
+  postId          Int
+  comment_content         String
+  user            User     @relation(fields: [userId], references: [id])
+  post            Post     @relation(fields: [postId], references: [id])
+  createdAt       DateTime @default(now())
+}
+
+model Media {
+  id        Int       @id @default(autoincrement())
+  postId    Int
+  post      Post      @relation(fields: [postId], references: [id])
+  url       String
+  type      MediaType
+  createdAt DateTime  @default(now())
+}
+
+model Notification {
+  id          Int      @id @default(autoincrement())
+  userId      Int
+  message     String
+  createdAt   DateTime @default(now())
+  isRead      Boolean  @default(false)
+
+  User        User     @relation(fields: [userId], references: [id])
+}
+
+model Message {
+  id          Int      @id @default(autoincrement())
+  senderId    Int
+  receiverId  Int
+  sender      User     @relation("SentMessages", fields: [senderId], references: [id])
+  receiver    User     @relation("ReceivedMessages", fields: [receiverId], references: [id])
+  content     String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([senderId])
+  @@index([receiverId])
+  @@index([createdAt])
+}
+
+
+enum MediaType {
+  IMAGE
+  VIDEO
+}
+
+enum FollowRequestStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
+}
