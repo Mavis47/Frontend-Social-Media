@@ -1,5 +1,5 @@
 import { v2 as cloudinary, type UploadApiResponse } from 'cloudinary';
-import { CLOUDINARY_OPTIONS } from './cloudinary';
+import { CLOUDINARY_OPTIONS } from './cloudinary.js';
 
 cloudinary.config(CLOUDINARY_OPTIONS);
 
